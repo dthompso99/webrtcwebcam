@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="X-UA-Compatible" content="chrome=1">
-<title>Test Application webrtc</title>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
-<script src="webcam.js"></script>
+	<meta http-equiv="X-UA-Compatible" content="chrome=1">
+	<title>Test Application webrtc</title>
+	<!-- Include chrome frame to allow IE to play -->
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+	<!-- config.js has a single object defined: "localsettings".  Used to define the websocket url -->
+	<script type="text/javascript" src="config.js"></script>
+	<!--  Main webcam script -->
+	<script type="text/javascript" src="webcam.js"></script>
 </head>
 <body>
-	<a href="nw:version">Version</a> Room:<input id="channel" value="default" />
+	Room:<input id="channel" value="default" />
 	<div>
 		Local:
 		<span id="streams"></span>
@@ -19,7 +23,7 @@
 	<button id="end">end</button>
 
 	<script>
-		var test = new htmlphone({name: "local", channel: document.getElementById("channel").value, videosize:200, videocontainer: document.getElementById("streams"), socketserver:"ws://example.com:7777"});
+		var test = new htmlphone({name: "local", channel: document.getElementById("channel").value, videosize:200, videocontainer: document.getElementById("streams"), socketserver:localsettings.socketserver});
 		document.getElementById("start").onclick = function() {
 			test.loadStream();
 			test.connect();
@@ -43,7 +47,7 @@
    // You may want to place these lines inside an onload handler
    CFInstall.check({
      mode: "overlay",
-     destination: "http://example.com"
+     destination: localsettings.chromeframeReturnURL
    });
   </script>
 </body>
