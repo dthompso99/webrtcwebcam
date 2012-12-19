@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<title>Test Application webrtc</title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js"></script>
+<script src="webcam.js"></script>
+</head>
+<body>
+	<a href="nw:version">Version</a> Room:<input id="channel" value="default" />
+	<div>
+		Local:
+		<span id="streams"></span>
+	</div>
+	<button id="start">start</button>
+	<button id="video">Add Video</button>
+	<button id="call">call</button>
+	<button id="listen">listen</button>
+	<button id="end">end</button>
+
+	<script>
+		var test = new htmlphone({name: "local", channel: document.getElementById("channel").value, videosize:200, videocontainer: document.getElementById("streams"), socketserver:"ws://example.com:7777"});
+		document.getElementById("start").onclick = function() {
+			test.loadStream();
+			test.connect();
+		}
+		document.getElementById("video").onclick = function() {
+			test.startVideo();
+		}
+		document.getElementById("listen").onclick = function() {
+			test.connect();
+		}
+		document.getElementById("call").onclick = function() {
+			test.startBroadcast();
+		}
+
+		document.getElementById("end").onclick = function() {
+			test.end();
+		}
+
+	</script>
+	  <script>
+   // You may want to place these lines inside an onload handler
+   CFInstall.check({
+     mode: "overlay",
+     destination: "http://example.com"
+   });
+  </script>
+</body>
+</html>
